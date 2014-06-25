@@ -19,7 +19,9 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
+        // The number of nodes is N=40 for all test cases
+        int V = 40;
+        //
         
     }
     

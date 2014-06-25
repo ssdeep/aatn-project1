@@ -67,5 +67,8 @@ class Graph{
     void addEdge(Edge E){
         adjMatrix[E.x][E.y] = E.weight;
     }
+    void FloydWarshall(){
+        
+    }
     
 }
