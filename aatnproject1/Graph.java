@@ -48,6 +48,8 @@ class Graph{
                             allPairs[i][j] = Integer.MAX_VALUE;
                             nextNode[i][j] = -1;
                             }
+                        else
+                            nextNode[i][j] = j;
                     }
                 }
                 
@@ -66,9 +68,24 @@ class Graph{
     */
     void addEdge(Edge E){
         adjMatrix[E.x][E.y] = E.weight;
+        // In preparation for the Floyd Warshall Algorithm
+        allPairs[E.x][E.y]  = E.weight;
+        nextNode[E.x][E.y] = E.y;
     }
     void FloydWarshall(){
         
+        // Perform the shortest path computation for all the pairs using Floyd Warshall Algorithm
+        
+        for(int k = 0 ; k < V ; k++){
+            for(int i = 0 ; i < V ; i++){
+                for(int j = 0 ; j < V ; j++){
+                    if(allPairs[i][k]+allPairs[k][j]<allPairs[i][j]){
+                        allPairs[i][j] = allPairs[i][k] + allPairs[k][j];
+                        nextNode[i][j] = nextNode[i][k];
+                    }
+                }
+            }
+        }
     }
     
 }

@@ -15,4 +15,9 @@ class Edge{
     int x;
     int y;
     int weight;
+    Edge(int x, int y, int w){
+        this.x = x;
+        this.y = y;
+        this.weight = w;
+    }
 }
