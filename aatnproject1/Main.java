@@ -22,7 +22,7 @@ public class Main {
      */
     public static void main(String[] args) {
         // The number of nodes is N=40 for all test cases
-        int V = 40;
+        int V = 8;
         // Read from standard input the k value for each input case, all others are generated in run time
         int k = 0;
         // for the inputs
@@ -70,22 +70,29 @@ public class Main {
                 }
             }
             
-           // System.out.println("Printing a[][]");
+            System.out.println("Printing a[][]");
             
-          //  printMatrix(a, V);
+            printMatrix(a, V);
             
-           // System.out.println("Printing b[][]");
+            System.out.println("Printing b[][]");
            
-           // printMatrix(b, V);
+            printMatrix(b, V);
             
             // create the network Graph
             Graph network = new Graph(V, edgeList);
             // perform the shortest path calculation
              network.FloydWarshall();
+             System.out.println("After Floyd Warshall");
+             printMatrix(network.allPairs, V);
+             System.out.println("The next matrix");
+             printMatrix(network.nextNode, V);
              // After performing the shortest path calculation, compute cost and capacity for links
-             doCostComputation(network, a, b, V);
-             
-            
+             int[][] edgeCapacities = new int[V][V];
+             int[][] c = doCostComputation(network, a, b, V, edgeCapacities);
+             System.out.println("Cost Matrix");
+             printMatrix(c, V);
+             System.out.println("Edge Capacities");
+             printMatrix(edgeCapacities, V);
             k = sc.nextInt();
             
             
@@ -107,8 +114,45 @@ public class Main {
         }
     }
 
-    private static void doCostComputation(Graph network, int[][] a, int[][] b, int V) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private static int[][] doCostComputation(Graph network, int[][] a, int[][] b, int V, int[][] e) {
+
+            // For the computation we have the graph with the all pairs shortest paths computed
+            
+            // We also have the matrices unit cost matrix and the trafic demand 
+            // we compute a cost matrix and return it as answer
+            int[][] c = new int[V][V];
+            // compute the capacities for all links and sum them
+            int totalCost = 0;
+            for(int i= 0 ; i < V ; i++){
+                for(int j = 0 ; j < V ; j++){
+                    if(i==j)
+                        continue;
+                    c[i][j] = pathCost(i, j, network, a, b, e);
+                    totalCost+=c[i][j];
+                    
+                }
+            }
+            System.out.println("Total Cost of the network:"+totalCost);
+            // output the final capacity graph to a file for later use
+            return c;
+    }
+
+    private static int pathCost(int i, int j, Graph network, int[][] a, int[][] b, int[][] e) {
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+   
+        int start = i ;
+        int dest = j;
+        int pathUnitCost = 0;
+        while(start!=dest){
+            int nextNode = network.nextNode[start][dest];
+            pathUnitCost = pathUnitCost + a[start][nextNode];
+            e[start][nextNode]+= a[start][nextNode]*b[i][j];
+            start = network.nextNode[start][dest];
+            
+        }
+        pathUnitCost = pathUnitCost*b[i][j];
+        
+        return pathUnitCost;
     }
     
 }
