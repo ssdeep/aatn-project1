@@ -72,7 +72,7 @@ class Graph{
         allPairs[E.x][E.y]  = E.weight;
         nextNode[E.x][E.y] = E.y;
     }
-    void FloydWarshall(){
+    void floydWarshall(){
         
         // Perform the shortest path computation for all the pairs using Floyd Warshall Algorithm
         
