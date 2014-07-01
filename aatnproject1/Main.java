@@ -36,7 +36,7 @@ public class Main {
         int minK = 3;
         // write all the answers to an output file called experimentStats.dat
         
-        es = new FileWriter("experimentStats.dat");
+        es = new FileWriter(".\\/data\\/experimentStats.dat");
         es.write("k,density,cost\n");
         
         // for the inputs
@@ -128,7 +128,7 @@ public class Main {
              
              */
              // print the results to a file kioutput.dat for each k value = 3..15
-             FileWriter fw = new FileWriter("k"+k+"output.dat");
+             FileWriter fw = new FileWriter("./data/k"+k+"output.dat");
              for(int i = 0 ; i < V ; i++){
                  String line="";
                  for(int j = 0 ; j < V ; j++){
